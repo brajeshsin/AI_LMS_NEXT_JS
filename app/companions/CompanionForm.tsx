@@ -30,6 +30,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { subjects } from '@/constants'
+import { Textarea } from '@/components/ui/textarea'
 
 function CompanionForm() {
 
@@ -52,7 +53,7 @@ function CompanionForm() {
     }
 
     return (
-        <div>
+        <div className=' p-4'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
@@ -87,7 +88,7 @@ function CompanionForm() {
                                         </SelectTrigger>
                                         <SelectContent>
                                             {subjects.map((subject) => {
-                                                console.log(subject, "dsdcjncj");
+                                               
                                                 return (
                                                     <SelectItem
                                                         value={subject}
@@ -112,9 +113,9 @@ function CompanionForm() {
                         name="topic"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Topic name</FormLabel>
+                                <FormLabel>What shouls companion help with?</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter topic name" {...field}
+                                    <Textarea placeholder="Ex. Coding or anything" {...field}
                                         className='input'
                                     />
                                 </FormControl>
@@ -122,16 +123,31 @@ function CompanionForm() {
                             </FormItem>
                         )}
                     />
-                    <FormField
+                 <FormField
                         control={form.control}
                         name="voice"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Voice name</FormLabel>
+                                <FormLabel>Voices</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter voice name" {...field}
-                                        className='input'
-                                    />
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                        defaultValue={field.value}
+                                    >
+                                        <SelectTrigger className="input ">
+                                            <SelectValue placeholder="Select the voice" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                           <SelectItem value='male'>
+                                            Male
+                                           </SelectItem>
+                                             <SelectItem value='female'>
+                                            Female
+                                           </SelectItem>
+                                        </SelectContent>
+
+                                    </Select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -142,11 +158,26 @@ function CompanionForm() {
                         name="style"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Style name</FormLabel>
+                                <FormLabel>Style</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter style name" {...field}
-                                        className='input'
-                                    />
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                        defaultValue={field.value}
+                                    >
+                                        <SelectTrigger className="input ">
+                                            <SelectValue placeholder="Select the style" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                           <SelectItem value='formal'>
+                                            Formal
+                                           </SelectItem>
+                                             <SelectItem value='casual'>
+                                            Casual
+                                           </SelectItem>
+                                        </SelectContent>
+
+                                    </Select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -161,11 +192,17 @@ function CompanionForm() {
                                 <FormControl>
                                     <Input
                                         type="number"
-                                        placeholder="Enter duration"
+                                        placeholder="Estimates session duration in minutes"
                                         {...field}
                                         onChange={(e) => field.onChange(Number(e.target.value))}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                         className="input [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [appearance:textfield]"
                                     />
+
 
                                 </FormControl>
                                 <FormMessage />
@@ -173,7 +210,7 @@ function CompanionForm() {
                         )}
                     />
 
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" className='w-full cursor-pointer'>Build your companion</Button>
                 </form>
             </Form>
         </div>
